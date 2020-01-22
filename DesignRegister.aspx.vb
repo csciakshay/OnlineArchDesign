@@ -19,6 +19,7 @@ Partial Class DesignRegister
             cmd.Parameters.Add("@designBy", Data.SqlDbType.VarChar).Value = TxtDesignBy.Text
             cmd.Parameters.Add("@publishDate", Data.SqlDbType.Date).Value = Today.ToShortDateString
             cmd.Parameters.Add("@materialUsed", Data.SqlDbType.VarChar).Value = TxtMaterialUsed.Text
+            cmd.Parameters.Add("@addBy", Data.SqlDbType.VarChar).Value = Session("uname")
             ' con.Open()
 
             If cmd.ExecuteNonQuery() Then
@@ -44,27 +45,36 @@ Partial Class DesignRegister
     End Function
 
     Protected Sub UploadAndSaveImages()
-        For Each postedFile As HttpPostedFile In FileUpload1.PostedFiles
-            Dim filename As String = Path.GetFileName(postedFile.FileName)
-            Dim contentType As String = postedFile.ContentType
-            Using fs As Stream = postedFile.InputStream
-                Using br As New BinaryReader(fs)
-                    Dim bytes As Byte() = br.ReadBytes(Convert.ToInt32(fs.Length))
-                    FileUpload1.SaveAs(Server.MapPath("~/upload/" + filename))
-                    Dim query As String = "insert into designImages values (@Id, @Name, @ContentType, @Data)"
-                    Using cmd As New SqlCommand(query)
-                        cmd.Connection = con
-                        cmd.Parameters.AddWithValue("@Id", id)
-                        cmd.Parameters.AddWithValue("@Name", filename)
-                        cmd.Parameters.AddWithValue("@ContentType", contentType)
-                        cmd.Parameters.AddWithValue("@Data", "~/upload/" + filename)
-                        'con.Open()
-                        cmd.ExecuteNonQuery()
-                        ' con.Close()
-                    End Using
+        If FileUpload1.HasFiles Then
+            For Each postedFile As HttpPostedFile In FileUpload1.PostedFiles
+                Dim filename As String = Path.GetFileName(postedFile.FileName)
+                Dim contentType As String = postedFile.ContentType
 
+                Using fs As Stream = postedFile.InputStream
+                    Using br As New BinaryReader(fs)
+                        Dim bytes As Byte() = br.ReadBytes(Convert.ToInt32(fs.Length))
+                        FileUpload1.SaveAs(Server.MapPath("~/upload/" + filename))
+                        Dim query As String = "insert into designImages values (@Id, @Name, @ContentType, @Data)"
+                        Using cmd As New SqlCommand(query)
+                            cmd.Connection = con
+                            cmd.Parameters.AddWithValue("@Id", id)
+                            cmd.Parameters.AddWithValue("@Name", filename)
+                            cmd.Parameters.AddWithValue("@ContentType", contentType)
+                            cmd.Parameters.AddWithValue("@Data", "~/upload/" + filename)
+                            'con.Open()
+                            cmd.ExecuteNonQuery()
+                            ' con.Close()
+                        End Using
+
+                    End Using
                 End Using
-            End Using
-        Next
+            Next
+        End If
+    End Sub
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session("uname") Is Nothing Then
+            Response.Redirect("login.aspx")
+        End If
     End Sub
 End Class

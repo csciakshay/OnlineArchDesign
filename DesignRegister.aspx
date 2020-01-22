@@ -79,17 +79,18 @@
                     Upload Images
                 </div>
                 <div class="col-md-4">
-                    <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="true"/>
+                    <asp:FileUpload ID="FileUpload1" runat="server" AllowMultiple="true" class="genric-btn info"/>
                 </div>
                 <div class="col-md-4">
                     
                 </div>
 
             </div>
+            <br />
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <asp:Button ID="Button1" runat="server" Text="Submit" />
+                    <asp:Button ID="Button1" runat="server" Text="Submit" class="genric-btn success" />
                 </div>
                 <div class="col-md-4"></div>
             </div>

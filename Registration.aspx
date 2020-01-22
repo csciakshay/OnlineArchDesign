@@ -142,7 +142,7 @@
             </div>
             <div class="row">
                 <div class="mt-10">
-                    <asp:Button ID="Button1" runat="server" Text="Submit" />
+                    <asp:Button ID="Button1" runat="server" Text="Submit" class="genric-btn success" />
                    
 
                 </div>

@@ -79,6 +79,7 @@
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<div class="container">
+         
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -89,7 +90,7 @@
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
 							<li class="nav-item active">
-								<a class="nav-link" href="index.html">Home</a>
+								<a class="nav-link" href="Home.aspx">Home</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="about-us.html">About</a>
@@ -129,7 +130,10 @@
 	<!--================Canvus Menu Area =================-->
 	<div class="canvus_menu">
 		<div class="container">
+            
 			<div class="float-right">
+                <a href="#" onclick="logout();"><asp:Image ID="ImageButton1" runat="server" ImageUrl="~/upload/logout.jpg" Width="40" Height="30"/><asp:Label ID="Label1" runat="server" Text=""></asp:Label></a>
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/upload/noImage.png" Width="40" Height="30" style="border-radius:50%"/>                
 				<div class="toggle_icon" title="Menu Bar">
 					<span></span>
 				</div>
@@ -217,5 +221,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="loaft/vendors/swiper/js/swiper.min.js"></script>
 	<script src="loaft/vendors/scroll/jquery.mCustomScrollbar.js"></script>
 	<script src="loaft/js/theme.js"></script>
+    <script type="text/javascript" >
+        function logout() {
+            if (confirm('Are you sure want to logout?')) {
+                $.post("logout.aspx?action=logout", {}, function (data) {
+                    location.href = "logout.aspx";
+                });
+            }
+        }
+            </script>
 </body>
 </html>
