@@ -19,4 +19,8 @@ Public Partial Class Account_Register
             ErrorMessage.Text = result.Errors.FirstOrDefault()
         End If
     End Sub
+
+    Protected Sub Password_TextChanged(sender As Object, e As EventArgs) Handles Password.TextChanged
+
+    End Sub
 End Class
