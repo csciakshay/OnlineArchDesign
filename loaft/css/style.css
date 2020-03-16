@@ -50,7 +50,9 @@ body {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
-  color: #777777; }
+  color: #777777; 
+  background-color: seagreen !important;
+}
 
 h1,
 h2,
