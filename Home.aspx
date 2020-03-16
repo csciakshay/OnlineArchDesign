@@ -9,7 +9,7 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/maxresdefault.jpg" alt="" >
+						<img class="img-fluid w-100" src="img/banner/maxresdefault.jpg" alt="" style="height: 450px">
 					</div>
 				</div>
 
@@ -184,49 +184,51 @@
                              </asp:DataList>
                              <asp:SqlDataSource runat="server" ID="SqlDataSource2" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [register] where usertype='Architech'"></asp:SqlDataSource>
                          </div>
- </div>
-                    <div class="row">
-                   <!-- single counter -->
-							<%--	<div class="single_counter">
-									<div class="thumb">
-										<img src="img/project/count1.png" alt="">
-									</div>
-									<div class="info-content">
-										<h4><span class="counter">1990</span></h4>
-										<p>Projects done</p>
-									</div>
-								</div>
-								<!-- single counter -->
-								<div class="single_counter">
-									<div class="thumb">
-										<img src="img/project/count2.png" alt="">
-									</div>
-									<div class="info-content">
-										<h4><span class="counter">50</span>+</h4>
-										<p>Expert Members</p>
-									</div>
-								</div>
-								<!-- single counter -->
-								<div class="single_counter">
-									<div class="thumb">
-										<img src="img/project/count3.png" alt="">
-									</div>
-									<div class="info-content">
-										<h4><span class="counter">25</span>+</h4>
-										<p>Achievements</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> --%>
-		</div>
+            </div>
+                   
                 </ContentTemplate>
             </asp:UpdatePanel>
             </div>
         </div>
-       
+        <div class="row">
+            <div class ="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="counter_area" id="project_counter">
+                    <!-- single counter -->
+                    <div class="single_counter">
+                        <div class="thumb">
+                            <img src="img/project/count1.png" alt="">
+                        </div>
+                        <div class="info-content">
+                            <h4><span class="counter">1990</span></h4>
+                            <p>Projects done</p>
+                        </div>
+                    </div>
+                    <!-- single counter -->
+                    <div class="single_counter">
+                        <div class="thumb">
+                            <img src="img/project/count2.png" alt="">
+                        </div>
+                        <div class="info-content">
+                            <h4><span class="counter">50</span>+</h4>
+                            <p>Expert Members</p>
+                        </div>
+                    </div>
+                    <!-- single counter -->
+                    <div class="single_counter">
+                        <div class="thumb">
+                            <img src="img/project/count3.png" alt="">
+                        </div>
+                        <div class="info-content">
+                            <h4><span class="counter">25</span>+</h4>
+                            <p>Achievements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+      
         
            </section> 
                           

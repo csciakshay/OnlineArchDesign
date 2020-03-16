@@ -1,9 +1,11 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
+Imports System.Data
+Imports System.Drawing
 
 Partial Class Designdetail
     Inherits System.Web.UI.Page
-    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\ishit\Documents\Visual Studio 2013\WebSites\WebSite3\App_Data\Database.mdf;Integrated Security=True")
+    Dim con As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("ConnectionString").ConnectionString)
     Dim a As Integer
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
@@ -17,6 +19,7 @@ Partial Class Designdetail
             Dim dt As New Data.DataTable()
             a = adap.ExecuteScalar()
             a += 1
+            TextId.Text = a
             Dim cmd As New SqlCommand("insert into Interior values('" & Textname.Text & "','" & Textsize.Text & "','" & Textcolor.Text & "','" & Textprice.Text & "','" & DropDownList1.SelectedValue & "','" & Textdes.Text & "','" & imgpath & "','" & Session("id") & "') ", con)
             If cmd.ExecuteNonQuery() Then
                 UploadAndSaveImages()
@@ -31,6 +34,8 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
+        Finally
+            con.Close()
         End Try
     End Sub
     Sub reset()
@@ -73,15 +78,13 @@ Partial Class Designdetail
     End Sub
 
     Protected Sub DropDownList2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DropDownList2.SelectedIndexChanged
-        'If (Not Page.IsPostBack) Then
-
-
-        '    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\ishit\Documents\Visual Studio 2013\WebSites\WebSite1\App_Data\Database.mdf;Integrated Security=True")
+      
         Try
             Dim adap As New SqlDataAdapter("select * from Interior where id='" & DropDownList2.SelectedValue & "'", con)
             Dim dt As New Data.DataTable
             adap.Fill(dt)
             If dt.Rows.Count > 0 Then
+                TextId.Text = dt.Rows(0)("Id")
                 Textname.Text = dt.Rows(0)("InteriorName").ToString
                 DropDownList1.SelectedValue = dt.Rows(0)("InteriorType").ToString
                 Textprice.Text = dt.Rows(0)("Price").ToString
@@ -90,7 +93,7 @@ Partial Class Designdetail
                 Textdes.Text = dt.Rows(0)("Description").ToString
                 Image1.Visible = True
                 Image1.ImageUrl = dt.Rows(0)("Image").ToString
-
+                BindGridview()
             Else
                 Image1.Visible = False
                 ScriptManager.RegisterStartupScript(Me, Page.GetType, "fails", "alert('Invalid !!!');", True)
@@ -109,6 +112,7 @@ Partial Class Designdetail
                 Response.Redirect("login2.aspx", False)
             Else
                 If Not Page.IsPostBack Then
+                    '  BindGridview()
                     con.Open()
                     Dim adap As New SqlDataAdapter("select * from Design ", con)
                     Dim dt As New Data.DataTable()
@@ -136,6 +140,8 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
+        Finally
+            con.Close()
         End Try
     End Sub
 
@@ -159,6 +165,8 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
+        Finally
+            con.Close()
         End Try
     End Sub
     Sub reset2()
@@ -185,7 +193,7 @@ Partial Class Designdetail
             End If
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
-            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message)
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
         End Try
 
     End Sub
@@ -197,4 +205,111 @@ Partial Class Designdetail
         Textdes.Text = ""
         DropDownList1.SelectedValue = ""
     End Sub
+    Protected Sub BindGridview()
+        Dim ds As New DataSet()
+        
+        Dim cmd As New SqlCommand("select * from material where ARDesignid = '" & TextId.Text & "'", con)
+        
+        Dim da As New SqlDataAdapter(cmd)
+        da.Fill(ds)
+
+        If ds.Tables(0).Rows.Count > 0 Then
+            gvDetails.DataSource = ds
+            gvDetails.DataBind()
+        Else
+            ds.Tables(0).Rows.Add(ds.Tables(0).NewRow())
+            gvDetails.DataSource = ds
+            gvDetails.DataBind()
+            Dim columncount As Integer = gvDetails.Rows(0).Cells.Count
+            gvDetails.Rows(0).Cells.Clear()
+            gvDetails.Rows(0).Cells.Add(New TableCell())
+            gvDetails.Rows(0).Cells(0).ColumnSpan = columncount
+            gvDetails.Rows(0).Cells(0).Text = "No Records Found"
+        End If
+
+    End Sub
+    Protected Sub gvDetails_RowCommand(ByVal sender As Object, ByVal e As GridViewCommandEventArgs)
+        If e.CommandName.Equals("AddNew") Then
+
+            Dim txtname As TextBox = DirectCast(gvDetails.FooterRow.FindControl("txtmname"), TextBox)
+            Dim txtsize As TextBox = DirectCast(gvDetails.FooterRow.FindControl("txtmsize"), TextBox)
+            Dim txtprice As TextBox = DirectCast(gvDetails.FooterRow.FindControl("txtprice"), TextBox)
+            ' crudoperations("INSERT", txtname.Text, txtprice.Text, 0)
+            Dim cmd As New SqlCommand("insert into Material values('" & txtname.Text & "','" & txtsize.Text & "','" & txtprice.Text & "'," & TextId.Text & ")", con)
+            con.Open()
+            If cmd.ExecuteNonQuery Then
+                'MsgBox("Material Inserted")
+                lblresult.ForeColor = Color.Green
+                lblresult.Text = (txtname.Text & Convert.ToString(" details ")) + "insert" + "d successfully"
+                gvDetails.EditIndex = -1
+                BindGridview()
+            Else
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "sucess", "alert('Material added');", True)
+                '  MsgBox("Record not inserted")
+            End If
+            con.Close()
+        End If
+    End Sub
+    Protected Sub gvDetails_RowEditing(ByVal sender As Object, ByVal e As GridViewEditEventArgs)
+        gvDetails.EditIndex = e.NewEditIndex
+        BindGridview()
+    End Sub
+    Protected Sub gvDetails_RowCancelingEdit(ByVal sender As Object, ByVal e As GridViewCancelEditEventArgs)
+        gvDetails.EditIndex = -1
+        BindGridview()
+    End Sub
+    Protected Sub gvDetails_PageIndexChanging(ByVal sender As Object, ByVal e As GridViewPageEventArgs)
+        gvDetails.PageIndex = e.NewPageIndex
+        BindGridview()
+    End Sub
+    Protected Sub gvDetails_RowUpdating(ByVal sender As Object, ByVal e As GridViewUpdateEventArgs)
+        Try
+            Dim productid As Integer = Convert.ToInt32(gvDetails.DataKeys(e.RowIndex).Values("id").ToString())
+            Dim txtname As TextBox = DirectCast(gvDetails.Rows(e.RowIndex).FindControl("txtmaterialname"), TextBox)
+            Dim txtsize As TextBox = DirectCast(gvDetails.Rows(e.RowIndex).FindControl("txtmaterialsize"), TextBox)
+            Dim txtprice As TextBox = DirectCast(gvDetails.Rows(e.RowIndex).FindControl("txtProductprice"), TextBox)
+
+            'crudoperations("UPDATE", txtname.Text, txtprice.Text, productid)
+            Dim cmd As New SqlCommand("update Material set Materialtype='" & txtname.Text & "',Size='" & txtsize.Text & "',Price='" & txtprice.Text & "' where id=" & productid & "", con)
+            con.Open()
+            If cmd.ExecuteNonQuery Then
+                ' MsgBox("Material details updated")
+                lblresult.ForeColor = Color.Green
+                lblresult.Text = (txtname.Text & Convert.ToString(" details ")) + "update" + "d successfully"
+                gvDetails.EditIndex = -1
+                BindGridview()
+            Else
+                ScriptManager.RegisterStartupScript(Me, Page.GetType, "Fails", "alert('Material not updated');", True)
+            End If
+
+        Catch ex As Exception
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
+        Finally
+            con.Close()
+        End Try
+    End Sub
+    Protected Sub gvDetails_RowDeleting(ByVal sender As Object, ByVal e As GridViewDeleteEventArgs)
+        Try
+            Dim productid As Integer = Convert.ToInt32(gvDetails.DataKeys(e.RowIndex).Values("id").ToString())
+            
+            Dim cmd As New SqlCommand("delete from Material where id=" & productid & "", con)
+
+            con.Open()
+
+            If cmd.ExecuteNonQuery() Then
+                ' MsgBox("Material details deleted")
+                lblresult.ForeColor = Color.Green
+                lblresult.Text = (Convert.ToString(" Id ") & productid & Convert.ToString(" details ")) + "delete" + "d successfully"
+                gvDetails.EditIndex = -1
+                BindGridview()
+            End If
+
+        Catch ex As Exception
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
+        Finally
+            con.Close()
+        End Try
+
+    End Sub
+    
 End Class

@@ -16,7 +16,7 @@ Partial Class MasterPage
         ' MsgBox("logout call")
         Session.Abandon()
         Session.Clear()
-        Response.Redirect("login.aspx")
+        Response.Redirect("login2.aspx")
     End Sub
 End Class
 

@@ -142,7 +142,8 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="/loaft/img/banner/common-banner.jpg" alt="">
+						
+        <img class="img-fluid w-100" src="/loaft/img/banner/common-banner.jpg" alt="" style="height: 450px">
 					</div>
 				</div>
 

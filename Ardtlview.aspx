@@ -14,7 +14,7 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/bg_2.jpg" alt="" >
+						<img class="img-fluid w-100" src="img/banner/bg_2.jpg" alt="" style="height: 450px">
 					</div>
 				</div>
 
@@ -91,9 +91,7 @@
 
         });
     </script>
-         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
+        
            <div class="row">
                         <div class="col-md-4">
                            <b> <asp:Label ID="Label0" runat="server" Text="InteriorName:"></asp:Label>   </b>                         
@@ -130,13 +128,42 @@
                             </div>
 
                                 </div>
-                   
+        <div class="row">
+            <div class="col-md-2">
+                <b>
+                    <asp:Label ID="Label3" runat="server" Text="Material: "></asp:Label></b>
+            </div>
+            <div class="col-md-10">
+                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
+                    <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+
+                    <EditRowStyle BackColor="#7C6F57"></EditRowStyle>
+
+                    <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></FooterStyle>
+
+                    <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></HeaderStyle>
+
+                    <PagerStyle HorizontalAlign="Center" BackColor="#666666" ForeColor="White"></PagerStyle>
+
+                    <RowStyle BackColor="#E3EAEB"></RowStyle>
+
+                    <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+                    <SortedAscendingCellStyle BackColor="#F8FAFA"></SortedAscendingCellStyle>
+
+                    <SortedAscendingHeaderStyle BackColor="#246B61"></SortedAscendingHeaderStyle>
+
+                    <SortedDescendingCellStyle BackColor="#D4DFE1"></SortedDescendingCellStyle>
+
+                    <SortedDescendingHeaderStyle BackColor="#15524A"></SortedDescendingHeaderStyle>
+                </asp:GridView>
+                </div>
+            </div>
 
                     </div>
-                    <br>
                     </br>
-                     </ContentTemplate>
-                </asp:UpdatePanel>
+                    </br>
+                  
            <div class="row">
                  <div class="col-md-4"></div>
                             <div class="col-md-4">
@@ -146,7 +173,7 @@
                     </div>
                  <div class="col-md-4"></div>       
                 </div>
-                    </div>
+                    
         </section>
 
 

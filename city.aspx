@@ -8,7 +8,7 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/banner_overlay.png" alt="" >
+						<img class="img-fluid w-100" src="img/banner/banner_overlay.png" alt="" style="height: 450px">
 					</div>
 				</div>
 
