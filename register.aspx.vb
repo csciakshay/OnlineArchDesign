@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Partial Class register
     Inherits System.Web.UI.Page
-    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True")
+    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\ishit\Documents\Visual Studio 2013\WebSites\WebSite3\App_Data\Database.mdf;Integrated Security=True")
 
     Protected Sub Submit_Click(sender As Object, e As EventArgs) Handles Submit.Click
         Try
@@ -49,8 +49,8 @@ Partial Class register
 
             End If
         Catch ex As Exception
-            ' Session("errorMsg") = ex.ToString
-            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
+            Session("errorMsg") = ex.ToString
+            '  Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message)
         End Try
     End Sub
 

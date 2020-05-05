@@ -1,30 +1,11 @@
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'
-'  File:           Payment_success.aspx.vb
-'
-'  Facility:       The unit contains the Payment_success class
-'
-'  Abstract:       This class is intended for processing of requests that come
-'                  from the PayPal server during testing. Besides, this class
-'                  creates payment reports and records the process of interaction
-'                  with the PayPal server.
-'
-'  Environment:    VC 8.0
-'
-'  Author:         KB_Soft Group Ltd.
-'
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-Imports System.Net
+﻿Imports System.Net
 Imports System.IO
 Imports System.Globalization
 Imports System.Configuration.ConfigurationManager
 Imports System.Data
 Imports System.Xml
-
-Partial Class Payment_success
+Partial Class Payment_Success
     Inherits System.Web.UI.Page
-
     ' the parameters to be checked
     Private business As String = AppSettings("BusinessEmail")
     Private currency_code As String = AppSettings("CurrencyCode")
@@ -58,7 +39,7 @@ Partial Class Payment_success
         End If
 
         Dim strFormValues As String = Encoding.ASCII.GetString(Request.BinaryRead(Request.ContentLength))
-        Dim strNewValue
+        Dim strNewValue As String
 
         ' getting the URL to work with
         Dim URL As String
@@ -316,5 +297,4 @@ Partial Class Payment_success
             Return False
         End Try
     End Function
-
 End Class

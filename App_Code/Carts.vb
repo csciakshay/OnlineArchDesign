@@ -1,19 +1,4 @@
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-'
-'  File:           Carts.vb
-'
-'  Facility:       The unit contains the Carts class
-'
-'  Abstract:       This class is responsible for work with carts and provides
-'                  additional functions that are used in the entire site.
-'
-'  Environment:    VC 8.0
-'
-'  Author:         KB_Soft Group Ltd.
-'
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-Imports Microsoft.VisualBasic
+﻿Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Xml
 Imports System.IO
@@ -87,7 +72,7 @@ Namespace KBSoft
                 WriteFile("Error in Carts.LoadCart(): " + "currentCart.Rows.Count = 0")
                 HttpContext.Current.Response.Redirect("~/home.aspx")
             End If
-            Try                
+            Try
                 ' remove all goods from the current cart with the cart_id that does not ocincide with the specified one
                 foundRows = currentCart.Tables(0).Select(expression)
                 Dim i As Integer
@@ -120,7 +105,7 @@ Namespace KBSoft
         ''' <param name="item_id">the item identifier</param>
         ''' <returns>the item name</returns>
         Public Shared Function SearchIDGoods(ByVal item_id As String) As String
-            Try                
+            Try
                 'an expression for searching for an item for its id
                 Dim expression As String
                 expression = "id = '" + item_id + "'"

@@ -10,7 +10,7 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/work-2.jpg" alt="" style="height: 450px">
+						<img class="img-fluid w-100" src="img/banner/work-2.jpg" alt="" >
 					</div>
 				</div>
 
@@ -72,7 +72,7 @@
             <div class="row">
                     <div class="col-md-4"></div>
             <div class="col-md-4">
-               <center> <asp:Button ID="Button1" runat="server" Text="Login" class="btn btn-info"/></center>
+                <asp:Button ID="Button1" runat="server" Text="Login" class="btn btn-info"/>
                 </div> 
                     <div class="col-md-4"></div>
                     </div>

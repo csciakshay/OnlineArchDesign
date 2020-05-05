@@ -23,7 +23,7 @@ Partial Class forgotpassword
             message.Body = fullUrl
             smtpClient.EnableSsl = True
             smtpClient.Send(message)
-            Dim cmd2 As New SqlCommand("update register set password='" + FormsAuthentication.HashPasswordForStoringInConfigFile("password", "md5") + "'", con)
+            Dim cmd2 As New SqlCommand("update register set password='" + FormsAuthentication.HashPasswordForStoringInConfigFile("password", "md5") + "' where id=" & dt.Rows(0)("Id") & "", con)
             cmd2.ExecuteNonQuery()
             ScriptManager.RegisterStartupScript(Me, Page.GetType, "success", "alert('Reset link sent on " + Textmail.Text + "');", True)
             MsgBox("Reset link sent on " + Textmail.Text)

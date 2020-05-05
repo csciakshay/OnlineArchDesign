@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Designdetail.aspx.vb" Inherits="Designdetail" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <style type="text/css">
+     <style type="text/css">
 .GridviewDiv {font-size: 100%; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helevetica, sans-serif; color: #303933;}
 .headerstyle
 {
@@ -16,7 +16,7 @@ color:#FFFFFF;border-right-color:#abb079;border-bottom-color:#abb079;background-
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/sofa2.jpg"  alt="" style="height:450px">
+						<img class="img-fluid w-100" src="img/banner/sofa2.jpg"  alt="" >
 					</div>
 				</div>
 
@@ -31,7 +31,7 @@ color:#FFFFFF;border-right-color:#abb079;border-bottom-color:#abb079;background-
 					</div>
 				</div>
 				<div class="page_link">
-					<a href="index.html">Home</a>
+					<a href="home.aspx">Home</a>
 					<a href="Designdetail.aspx">Designdetail</a>
 				</div>
 			</div>
@@ -68,8 +68,7 @@ color:#FFFFFF;border-right-color:#abb079;border-bottom-color:#abb079;background-
             <div class="col-md-4 ">
                             <asp:Label ID="Label1" runat="server" Text="InteriorName "></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="Textname" ErrorMessage="!" ForeColor="Red"></asp:RequiredFieldValidator>
-                            <asp:TextBox ID="Textname" runat="server" class="single-input"></asp:TextBox>
-                            <asp:TextBox ID="TextId" runat="server" Visible="false" ></asp:TextBox>
+                            <asp:TextBox ID="Textname" runat="server" class="single-input" ClientIDMode="Static" ></asp:TextBox>
                          </div> 
                         <div class="col-md-4">
                                 <asp:Label ID="Label2" runat="server" Text="InteriorType"></asp:Label>
@@ -104,30 +103,44 @@ color:#FFFFFF;border-right-color:#abb079;border-bottom-color:#abb079;background-
                         </div>
                     </div>
                     <div class ="row">
-                 <div class="col-md-4">
+                 <div class="col-md-6">
                             <asp:Label ID="Label4" runat="server" Text="Price"></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="Textprice" ErrorMessage="!" ForeColor="Red"></asp:RequiredFieldValidator>
                             <asp:TextBox ID="Textprice" runat="server"  class="single-input" TextMode ="Number"></asp:TextBox>
+                     <asp:TextBox ID="TextId" runat="server" Visible="false" ></asp:TextBox>
                             </div>
-                 <div class="col-md-8">
+                 <div class="col-md-6">
                             <asp:Label ID="Label5" runat="server" Text="Description"></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="Textdes" ErrorMessage="!" ForeColor="Red"></asp:RequiredFieldValidator>
                             <asp:TextBox ID="Textdes" runat="server"  class="single-input" ></asp:TextBox>
                             </div>
                              </div>
-                    <br />
+                    </br>
                     <div class="row">
                         <div class="col-md-2">
                             <asp:Label ID="Label6" runat="server" Text="Material used"></asp:Label>
                             </div>
                         <div class="col-md-10">
                             <div class="GridviewDiv">
-                                <asp:GridView runat="server" ID="gvDetails" ShowFooter="true" AllowPaging="true"
-                                    PageSize="10" AutoGenerateColumns="false" DataKeyNames="id,materialtype"
+                                <asp:GridView runat="server" ID="gvDetails" ShowFooter="true" AllowPaging="true" AutoGenerateColumns="false" DataKeyNames="id,materialtype"
                                     OnPageIndexChanging="gvDetails_PageIndexChanging" OnRowCancelingEdit="gvDetails_RowCancelingEdit"
                                     OnRowEditing="gvDetails_RowEditing" OnRowUpdating="gvDetails_RowUpdating" OnRowDeleting="gvDetails_RowDeleting"
-                                    OnRowCommand="gvDetails_RowCommand">
-                                    <HeaderStyle CssClass="headerstyle" />
+                                    OnRowCommand="gvDetails_RowCommand" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" GridLines="None">
+                                    <AlternatingRowStyle BackColor="PaleGoldenrod"></AlternatingRowStyle>
+                                    <FooterStyle BackColor="Tan"></FooterStyle>
+
+                                    <HeaderStyle CssClass="headerstyle" BackColor="Tan" Font-Bold="True" />
+                                    <PagerStyle HorizontalAlign="Center" BackColor="PaleGoldenrod" ForeColor="DarkSlateBlue"></PagerStyle>
+
+                                    <SelectedRowStyle BackColor="DarkSlateBlue" ForeColor="GhostWhite"></SelectedRowStyle>
+
+                                    <SortedAscendingCellStyle BackColor="#FAFAE7"></SortedAscendingCellStyle>
+
+                                    <SortedAscendingHeaderStyle BackColor="#DAC09E"></SortedAscendingHeaderStyle>
+
+                                    <SortedDescendingCellStyle BackColor="#E1DB9C"></SortedDescendingCellStyle>
+
+                                    <SortedDescendingHeaderStyle BackColor="#C2A47B"></SortedDescendingHeaderStyle>
                                     <Columns>
                                         <asp:BoundField DataField="id" HeaderText="Id" ReadOnly="true" />
                                         <asp:TemplateField HeaderText="Matrial Name">
@@ -175,6 +188,8 @@ color:#FFFFFF;border-right-color:#abb079;border-bottom-color:#abb079;background-
          </ContentTemplate>
             </asp:UpdatePanel>
             <br />
+             <br />
+                    
             <div class="row">
                  <div class="col-md-4"></div>
                             <div class="col-md-4">

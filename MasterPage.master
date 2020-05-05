@@ -57,7 +57,7 @@
              <%End If%>
             
 			<li>
-				<a href="register.aspx">Registration</a>
+				<a href="registration.aspx">Registration</a>
 			</li>
              
             <%If (Session("userType") = "Architech") Then%>
@@ -239,14 +239,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="vendors/scroll/jquery.mCustomScrollbar.js"></script>
 	<script src="js/theme.js"></script>
     <script type="text/javascript" src="datepiker/js/foopicker.js"></script>
-    <script type="text/javascript">
-        function logout() {
-            if (confirm('Are you sure want to logout?')) {
-                $.post("logout.aspx?action=logout", {}, function (data) {
-                    location.href = "logout.aspx";
-                });
-            }
-        }
-    </script>
+
 </body>
 </html>

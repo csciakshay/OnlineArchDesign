@@ -9,7 +9,7 @@
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-lg-8 header-left">
 					<div class="">
-						<img class="img-fluid w-100" src="img/banner/maxresdefault.jpg" alt="" style="height: 450px">
+						<img class="img-fluid w-100" src="img/banner/maxresdefault.jpg" alt="" >
 					</div>
 				</div>
 
@@ -18,14 +18,14 @@
 						<h1>
 							Home
 						</h1>
-						<p class="pt-20">
-							If you are looking at best interior please choose perfect design here.
+						<p class="pt-20">.
 						</p>
 					</div>
+							If you are looking at best interior please choose perfect design here
 				</div>
 				<div class="page_link">
 					<a href="index.html">Home</a>
-					<a href="Designdetail.aspx">About</a>
+					<a href="aboutus.aspx">About</a>
 				</div>
 			</div>
 		</div>
@@ -95,7 +95,7 @@
                         <div class="col-md-2"></div>
                     </div>
                     <div class="row" aria-orientation="horizontal">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style ="overflow-y :scroll ;max-height:100%;">
                             
                     <asp:DataList ID="DataList1" runat="server" DataKeyField="Id" DataSourceID="SqlDataSource1" RepeatColumns="3" Width="100%" RepeatDirection="Horizontal">
                         <ItemTemplate>
@@ -184,15 +184,11 @@
                              </asp:DataList>
                              <asp:SqlDataSource runat="server" ID="SqlDataSource2" ConnectionString='<%$ ConnectionStrings:ConnectionString %>' SelectCommand="SELECT * FROM [register] where usertype='Architech'"></asp:SqlDataSource>
                          </div>
-            </div>
-                   
-                </ContentTemplate>
-            </asp:UpdatePanel>
-            </div>
-        </div>
-        <div class="row">
+ </div>
+                    <div class="row">
+                   <div class="row">
             <div class ="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="counter_area" id="project_counter">
                     <!-- single counter -->
                     <div class="single_counter">
@@ -228,7 +224,12 @@
             </div>
             <div class="col-md-4"></div>
         </div>
-      
+		</div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            </div>
+        </div>
+       
         
            </section> 
                           

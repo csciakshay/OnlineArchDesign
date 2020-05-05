@@ -1,29 +1,26 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Data
-Imports System.Xml
 Imports System.Globalization
 Imports System.IO
-
+Imports System.Xml
 
 Partial Class Ardtlview
     Inherits System.Web.UI.Page
     Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database.mdf;Integrated Security=True")
     Dim pid As Integer
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         Try
+            pid = Request.QueryString("id")
             Dim files As New List(Of ListItem)()
             If Session("uname") Is Nothing Then
                 Response.Redirect("login2.aspx", False)
             End If
-            pid = Request.QueryString("id")
             Dim adp1 As New SqlDataAdapter("select * from Architectimg where Archirectid = " & Request.QueryString("id") & "", con)
             Dim dt1 As New Data.DataTable()
             adp1.Fill(dt1)
 
             For Each row As DataRow In dt1.Rows
-                ' dt = row.Item("img")
-                files.Add(New ListItem(row.Item("img"), row.Item("img").ToString.Substring(2)))
+                files.Add(New ListItem(row.Item("Img"), row.Item("Img").ToString.Substring(2)))
             Next row
             Repeater1.DataSource = files
             Repeater1.DataBind()
@@ -40,15 +37,15 @@ Partial Class Ardtlview
                 deslbl.Text = dt.Rows(0)("Description").ToString
                 reglbl.Text = dt.Rows(0)("RegisterName").ToString
             End If
-            Dim adp2 As New SqlDataAdapter("select * from material where ARDesignid='" & Request.QueryString("id") & "'", con)
-            Dim dt2 As New Data.DataTable
-            adp2.Fill(dt2)
-            If dt2.Rows.Count > 0 Then
-                GridView1.DataSource = dt2
-                GridView1.DataBind()
-            End If
+            Dim adp2 As New SqlDataAdapter("select * from Material where ARDesignId=" & Request.QueryString("id") & "", con)
+            Dim ds As New Data.DataSet
+            adp2.Fill(ds)
+            GridView1.DataSource = ds.Tables(0)
+            GridView1.DataBind()
         Catch ex As Exception
-            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
+            ' MsgBox(ex.ToString)
+
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
         End Try
 
     End Sub
@@ -58,21 +55,17 @@ Partial Class Ardtlview
     End Sub
 
     Protected Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
         Try
-            Dim cmd As New SqlCommand("insert into Favourite values(" & Request.QueryString("id") & ",'" & Session("id") & "')", con)
             con.Open()
-
-            If cmd.ExecuteNonQuery Then
-                ScriptManager.RegisterStartupScript(Me, Page.GetType, "sucess", "alert('Design added to favourites');", True)
-            End If
+            Dim cmd As New SqlCommand("insert into Favourite values(" & Request.QueryString("id") & "," & Session("id") & ")", con)
+            cmd.ExecuteNonQuery()
         Catch ex As Exception
-            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
-
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
         Finally
             con.Close()
-
         End Try
-        
+
     End Sub
 
     Protected Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -147,4 +140,20 @@ Partial Class Ardtlview
 
         Return request_id
     End Function
+    Protected Function CalculateTotalAmount() As Decimal
+        Dim total As Decimal = 10
+        Dim ci As CultureInfo = New CultureInfo("en-us")
+        Try
+            'For Each row As GridViewRow In Me.gvCarts.Rows
+            '    Dim price As Decimal = Decimal.Parse(row.Cells(1).Text, ci)
+            '    Dim quantity As Integer = Decimal.Parse(row.Cells(2).Text, ci)
+            '    total = total + (price * quantity)
+            'Next
+            Return total
+        Catch ex As Exception
+            KBSoft.Carts.WriteFile("Error in ViewCart.CalculateTotalAmount(): Input string was not in a correct format")
+            Return 0
+        End Try
+    End Function
 End Class
+

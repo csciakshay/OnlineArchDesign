@@ -1,11 +1,11 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports System.Data
 Imports System.Drawing
+Imports System.Data
 
 Partial Class Designdetail
     Inherits System.Web.UI.Page
-    Dim con As New SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings("ConnectionString").ConnectionString)
+    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\ishit\Documents\Visual Studio 2013\WebSites\WebSite3\App_Data\Database.mdf;Integrated Security=True")
     Dim a As Integer
     Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
@@ -19,7 +19,6 @@ Partial Class Designdetail
             Dim dt As New Data.DataTable()
             a = adap.ExecuteScalar()
             a += 1
-            TextId.Text = a
             Dim cmd As New SqlCommand("insert into Interior values('" & Textname.Text & "','" & Textsize.Text & "','" & Textcolor.Text & "','" & Textprice.Text & "','" & DropDownList1.SelectedValue & "','" & Textdes.Text & "','" & imgpath & "','" & Session("id") & "') ", con)
             If cmd.ExecuteNonQuery() Then
                 UploadAndSaveImages()
@@ -34,8 +33,6 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
-        Finally
-            con.Close()
         End Try
     End Sub
     Sub reset()
@@ -78,13 +75,16 @@ Partial Class Designdetail
     End Sub
 
     Protected Sub DropDownList2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles DropDownList2.SelectedIndexChanged
-      
+        'If (Not Page.IsPostBack) Then
+
+
+        '    Dim con As New SqlConnection("Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\Users\ishit\Documents\Visual Studio 2013\WebSites\WebSite1\App_Data\Database.mdf;Integrated Security=True")
         Try
             Dim adap As New SqlDataAdapter("select * from Interior where id='" & DropDownList2.SelectedValue & "'", con)
             Dim dt As New Data.DataTable
             adap.Fill(dt)
             If dt.Rows.Count > 0 Then
-                TextId.Text = dt.Rows(0)("Id")
+                TextId.Text = dt.Rows(0)("id").ToString
                 Textname.Text = dt.Rows(0)("InteriorName").ToString
                 DropDownList1.SelectedValue = dt.Rows(0)("InteriorType").ToString
                 Textprice.Text = dt.Rows(0)("Price").ToString
@@ -112,7 +112,6 @@ Partial Class Designdetail
                 Response.Redirect("login2.aspx", False)
             Else
                 If Not Page.IsPostBack Then
-                    '  BindGridview()
                     con.Open()
                     Dim adap As New SqlDataAdapter("select * from Design ", con)
                     Dim dt As New Data.DataTable()
@@ -140,8 +139,6 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
-        Finally
-            con.Close()
         End Try
     End Sub
 
@@ -165,8 +162,6 @@ Partial Class Designdetail
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
             Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace("\r\n", False))
-        Finally
-            con.Close()
         End Try
     End Sub
     Sub reset2()
@@ -193,7 +188,7 @@ Partial Class Designdetail
             End If
         Catch ex As Exception
             ' Session("errorMsg") = ex.ToString
-            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message.Replace(Environment.NewLine, ""))
+            Response.Redirect("errorPage.aspx?errorMsg=" + ex.Message)
         End Try
 
     End Sub
@@ -207,9 +202,9 @@ Partial Class Designdetail
     End Sub
     Protected Sub BindGridview()
         Dim ds As New DataSet()
-        
+
         Dim cmd As New SqlCommand("select * from material where ARDesignid = '" & TextId.Text & "'", con)
-        
+
         Dim da As New SqlDataAdapter(cmd)
         da.Fill(ds)
 
@@ -291,7 +286,7 @@ Partial Class Designdetail
     Protected Sub gvDetails_RowDeleting(ByVal sender As Object, ByVal e As GridViewDeleteEventArgs)
         Try
             Dim productid As Integer = Convert.ToInt32(gvDetails.DataKeys(e.RowIndex).Values("id").ToString())
-            
+
             Dim cmd As New SqlCommand("delete from Material where id=" & productid & "", con)
 
             con.Open()
@@ -311,5 +306,4 @@ Partial Class Designdetail
         End Try
 
     End Sub
-    
 End Class

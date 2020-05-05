@@ -1,10 +1,10 @@
 ﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="PayPal.aspx.vb" Inherits="PayPal" %>
 
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Untitled Page</title>
+    <title></title>
 </head>
 <body>
     <form id="payForm" method="post" action="<%Response.Write (URL)%>">
@@ -24,6 +24,5 @@
     <script language="javascript">
         document.forms["payForm"].submit();
     </script>
-
 </body>
 </html>
